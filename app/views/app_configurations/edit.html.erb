@@ -1,0 +1,33 @@
+<h1>Edit Configuration</h1>
+
+<%= form_with(model: @app_configuration, local: true) do |f| %>
+
+  <% if @app_configuration.errors.any? %>
+    <div style="color: red;">
+      <h2>Errors:</h2>
+      <ul>
+        <% @app_configuration.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :config_data, "Configuration (JSON)" %><br>
+    <%= f.text_area :config_data, rows: 10, cols: 50, value: @app_configuration.config_data.to_json %>
+  </div>
+
+  <div>
+    <%= f.submit 'Update' %>
+  </div>
+
+<% end %>
+
+<br>
+<%= link_to 'Back', app_configurations_path %>

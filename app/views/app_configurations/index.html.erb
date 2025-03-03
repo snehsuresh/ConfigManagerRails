@@ -1,0 +1,29 @@
+<!-- app/views/app_configurations/index.html.erb -->
+<h1>Configurations</h1>
+
+<table border="1" cellpadding="5">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Version</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @app_configuration.each do |config| %>
+      <tr>
+        <td><%= config.id %></td>
+        <td><%= config.name %></td>
+        <td><%= config.version %></td>
+        <td>
+          <%= link_to 'Show', app_configuration_path(config) %> |
+          <%= link_to 'Edit', edit_app_configuration_path(config) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<%= link_to 'New Configuration', new_app_configuration_path %>

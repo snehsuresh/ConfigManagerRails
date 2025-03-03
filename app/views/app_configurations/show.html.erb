@@ -1,0 +1,26 @@
+<!-- app/views/app_configurations/show.html.erb -->
+<h1>Configuration Details</h1>
+
+<p>
+  <strong>ID:</strong>
+  <%= @app_configuration.id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @app_configuration.name %>
+</p>
+
+<p>
+  <strong>Version:</strong>
+  <%= @app_configuration.version %>
+</p>
+
+<p>
+  <strong>Configuration Data:</strong>
+  <pre><%= JSON.pretty_generate(@app_configuration.config_data) rescue @configuration.config_data %></pre>
+</p>
+
+<br>
+<%= link_to 'Edit', edit_app_configuration_path(@app_configuration) %> |
+<%= link_to 'Back', app_configuration_path %>
