@@ -122,9 +122,9 @@ The simulation endpoint returns a JSON response containing the computed shipping
 
 # Demo Video
 
-For a complete demo of the platform, please see the attached video file: **demo.mp4**
+![Dashboard Demo](./demo.gif)
 
-> Note: To view the demo video, open `demo.mp4` in your favorite media player. (The file is included in the repository.)
+
 
 # Contributing
 
