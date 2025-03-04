@@ -10,15 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_03_210532) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_04_022250) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "app_configurations", force: :cascade do |t|
     t.string "name"
     t.jsonb "config_data"
-    t.integer "version"
+    t.integer "version", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string "whodunnit"
+    t.datetime "created_at"
+    t.bigint "item_id", null: false
+    t.string "item_type", null: false
+    t.string "event", null: false
+    t.text "object"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 end

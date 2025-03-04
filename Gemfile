@@ -12,6 +12,7 @@ gem 'jbuilder', '~> 2.7'    # JSON responses (API support)
 gem 'jsbundling-rails'      # For JavaScript (esbuild/webpack/rollup)
 gem 'cssbundling-rails'     # For CSS (Dart Sass, Tailwind, etc.)
 gem 'turbo-rails'           # Hotwire (replaces Turbolinks)
+gem 'paper_trail'
 
 # Optional but useful
 gem 'bootsnap', require: false   # Speeds up boot

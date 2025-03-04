@@ -1,24 +1,25 @@
-<!-- app/views/app_configurations/index.html.erb -->
-<h1>Configurations</h1>
+<h1 class="text-2xl font-bold mb-4">Configurations</h1>
 
-<table border="1" cellpadding="5">
+<table class="min-w-full divide-y divide-gray-200">
   <thead>
     <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Version</th>
-      <th>Actions</th>
+      <th class="px-4 py-2">ID</th>
+      <th class="px-4 py-2">Name</th>
+      <th class="px-4 py-2">Version</th>
+      <th class="px-4 py-2">Actions</th>
     </tr>
   </thead>
   <tbody>
-    <% @app_configuration.each do |config| %>
+    <% @app_configurations.each do |config| %>
       <tr>
-        <td><%= config.id %></td>
-        <td><%= config.name %></td>
-        <td><%= config.version %></td>
-        <td>
-          <%= link_to 'Show', app_configuration_path(config) %> |
-          <%= link_to 'Edit', edit_app_configuration_path(config) %>
+        <td class="border px-4 py-2"><%= config.id %></td>
+        <td class="border px-4 py-2"><%= config.name %></td>
+        <td class="border px-4 py-2"><%= config[:version] || 1 %></td>
+
+        <td class="border px-4 py-2">
+          <%= link_to 'Show', app_configuration_path(config), class: "text-blue-500" %> |
+          <%= link_to 'Edit', edit_app_configuration_path(config), class: "text-green-500" %> |
+          <%= link_to 'Delete', app_configuration_path(config), method: :delete, data: { confirm: "Are you sure?" }, class: "text-red-500" %>
         </td>
       </tr>
     <% end %>
@@ -26,4 +27,4 @@
 </table>
 
 <br>
-<%= link_to 'New Configuration', new_app_configuration_path %>
+<%= link_to 'New Configuration', new_app_configuration_path, class: "bg-blue-500 text-white py-2 px-4 rounded" %>

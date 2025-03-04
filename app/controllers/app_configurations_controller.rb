@@ -1,7 +1,11 @@
-# app/controllers/configurations_controller.rb
 class AppConfigurationsController < ApplicationController
+  before_action :set_app_configuration, only: [:show, :edit, :update, :destroy]
+  
   def index
-    @app_configuration = AppConfiguration.all
+    @app_configurations = AppConfiguration.all
+  end
+
+  def show
   end
 
   def new
@@ -9,45 +13,51 @@ class AppConfigurationsController < ApplicationController
   end
 
   def create
-    @app_configuration = AppConfiguration.new(configuration_params)
-    @app_configuration.version = 1
+    @app_configuration = AppConfiguration.new(app_configuration_params)
+    @app_configuration.version = 1  # Initial version
     if @app_configuration.save
-      redirect_to app_configurations_path, notice: 'AppConfiguration updated successfully.'
+      redirect_to app_configurations_path, notice: 'Configuration created successfully.'
     else
       render :new
     end
   end
 
   def edit
-    @app_configuration = AppConfiguration.find(params[:id])
   end
 
   def update
-    @app_configuration = AppConfiguration.find(params[:id])
-    @app_configuration.version += 1
-    if @app_configuration.update(configuration_params)
-      redirect_to app_configurations_path, notice: 'AppConfiguration updated successfully.'
+    @app_configuration.assign_attributes(app_configuration_params)
+
+    # Force bump the version — directly bypass the method
+    @app_configuration[:version] = (@app_configuration[:version].to_i + 1)
+
+    if @app_configuration.save
+      redirect_to app_configurations_path, notice: 'Configuration updated successfully.'
     else
       render :edit
     end
   end
 
-  def show
-    @app_configuration = AppConfiguration.find(params[:id])
+
+
+
+  def destroy
+    @app_configuration.destroy
+    redirect_to app_configurations_path, notice: 'Configuration deleted successfully.'
   end
 
   private
 
-  def configuration_params
-    # Expect config_data to be a JSON string; we parse it.
-    parsed_params = params.require(:app_configuration).permit(:name, :config_data)
-    if parsed_params[:config_data].present?
-      begin
-        parsed_params[:config_data] = JSON.parse(parsed_params[:config_data])
-      rescue JSON::ParserError
-        @app_configuration&.errors&.add(:config_data, "Invalid JSON format")
+  def set_app_configuration
+    @app_configuration = AppConfiguration.find(params[:id])
+  end
+
+  # **Do not permit :version here!**
+  def app_configuration_params
+    params.require(:app_configuration).permit(:name, :config_data).tap do |whitelisted|
+      if whitelisted[:config_data].is_a?(String)
+        whitelisted[:config_data] = JSON.parse(whitelisted[:config_data])
       end
     end
-    parsed_params
   end
 end

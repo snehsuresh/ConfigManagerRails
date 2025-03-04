@@ -1,26 +1,30 @@
-<!-- app/views/app_configurations/show.html.erb -->
-<h1>Configuration Details</h1>
+<h1 class="text-2xl font-bold mb-4">Configuration Details</h1>
 
-<p>
-  <strong>ID:</strong>
-  <%= @app_configuration.id %>
-</p>
+<p><strong>ID:</strong> <%= @app_configuration.id %></p>
+<p><strong>Name:</strong> <%= @app_configuration.name %></p>
+<p><strong>Version:</strong> <%= @app_configuration.version %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @app_configuration.name %>
-</p>
+<p><strong>Configuration Data:</strong></p>
+<pre class="bg-gray-100 p-4 rounded"><%= JSON.pretty_generate(@app_configuration.config_data) rescue @app_configuration.config_data %></pre>
 
-<p>
-  <strong>Version:</strong>
-  <%= @app_configuration.version %>
-</p>
+<hr class="my-6">
 
-<p>
-  <strong>Configuration Data:</strong>
-  <pre><%= JSON.pretty_generate(@app_configuration.config_data) rescue @configuration.config_data %></pre>
-</p>
+<% if @app_configuration.name == 'shipping_rules' %>
+  <h2 class="text-xl font-semibold mb-2">Shipping Simulation</h2>
+  <div data-controller="simulation">
+    <label class="block mb-1">Enter Order Total (for test calculation):</label>
+    <input data-simulation-target="input"
+          type="number"
+          step="0.01"
+          class="border rounded px-2 py-1 mb-2"
+          data-action="input->simulation#simulate">
+
+    <p data-simulation-target="result" class="text-lg font-bold text-gray-700">Shipping Cost: (waiting...)</p>
+  </div>
+
+
+<% end %>
 
 <br>
-<%= link_to 'Edit', edit_app_configuration_path(@app_configuration) %> |
-<%= link_to 'Back', app_configuration_path %>
+<%= link_to 'Edit', edit_app_configuration_path(@app_configuration), class: "bg-green-500 text-white py-2 px-4 rounded" %> |
+<%= link_to 'Back', app_configurations_path, class: "bg-blue-500 text-white py-2 px-4 rounded" %>
