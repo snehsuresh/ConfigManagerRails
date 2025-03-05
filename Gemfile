@@ -31,5 +31,5 @@ group :development do
   gem 'web-console'
   gem 'listen', '~> 3.3'
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0'
+  gem 'spring-watcher-listen', '~> 2.1'
 end
